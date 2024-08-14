@@ -83,6 +83,15 @@ const moveBlock = ()=>{
 // moveBlock()
 
 
+const request = new XMLHttpRequest()
+request.open('GET','../data/any.json')
+request.setRequestHeader('Content-type','application/json')
+request.send()
+
+request.onload = () =>{
+    const data = JSON.parse(request.response)
+    console.log(data)
+}
 
 
 // Modal
