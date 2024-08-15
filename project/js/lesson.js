@@ -78,6 +78,45 @@ tabParent.onclick = (event) =>{
 }
 
 
+// converter
+
+const somInput = document.querySelector('#som')
+const usdInput = document.querySelector('#usd')
+const eurInput = document.querySelector('#eur')
+const inputs = document.querySelectorAll('.conv')
+
+
+inputs.forEach(element =>{
+    element.addEventListener('input',()=>{
+        const request = new XMLHttpRequest()
+        request.open('GET', '../data/converter.json')
+        request.setRequestHeader('Content-type','application/json')
+        request.send()
+
+        request.onload = () =>{
+            const data = JSON.parse(request.response)
+            
+            if(element.id === 'usd'){
+
+                somInput.value = (element.value * data.usd).toFixed(2)
+                eurInput.value = (element.value * (data.usd / data.eur)).toFixed(2)
+            }
+
+            if(element.id === 'som'){
+
+                usdInput.value = (element.value / data.usd).toFixed(2)
+                eurInput.value = (element.value / data.eur).toFixed(2)
+            }
+
+            if(element.id === 'eur'){
+                usdInput.value = (element.value * (data.eur/data.usd)).toFixed(2)
+                somInput.value = (element.value * data.eur).toFixed(2)
+            }
+        }
+
+    })
+})
+
 
 
 
