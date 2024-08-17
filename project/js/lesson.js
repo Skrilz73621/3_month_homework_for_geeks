@@ -118,6 +118,55 @@ inputs.forEach(element =>{
 })
 
 
+// Card switcher
+
+const btnPrev = document.querySelector('#btn-prev')
+const btnNext = document.querySelector('#btn-next')
+const cardBlock = document.querySelector('.card')
+let cardId = 1
+
+
+function cardSwitcher(){
+    fetch(`https://jsonplaceholder.typicode.com/todos/${cardId}`)
+    .then((response) => response.json()).then((data)=>{
+        cardBlock.innerHTML = `
+            <p>${data.title}</p>
+            <p style="color: ${data.completed ? 'green': 'red'}">${data.completed}</p>
+            <span>${data.id}</span>
+            `
+    })
+}
+
+
+cardSwitcher()
+
+
+btnNext.onclick = () => {
+    if(cardId < 200){
+        cardId++
+        cardSwitcher()
+    }else{
+        cardId = 1
+        cardSwitcher()
+    }
+}
+
+btnPrev.onclick = () =>{
+    if(cardId > 1){
+        cardId--
+        cardSwitcher()
+    }else{
+        cardId = 200
+        cardSwitcher()
+    }
+}
+
+
+fetch('https://jsonplaceholder.typicode.com/posts')
+.then((response)=> response.json()).then((data)=>{
+    console.log(data)
+})
+
 
 
 
